@@ -1,0 +1,45 @@
+class PlayerClass{
+    public:
+        SDL_Surface* surface;
+        const char* path = "Assets/Player.bmp";
+        int Playerx = 0;
+        int Playery = 0;
+        const int PlayerSpeed = 3;
+        bool init(){
+            this->surface = SDL_LoadBMP(path);
+            if (this->surface != NULL){
+                return false;
+            }
+            return true;
+        };
+        void HandleKey(SDL_Event e){
+            switch( e.key.keysym.sym )
+            {
+	            case SDLK_UP:
+	            this->Playery -= this->PlayerSpeed;
+	            break;
+
+	            case SDLK_DOWN:
+	            this->Playery += this->PlayerSpeed;
+	            break;
+
+	            case SDLK_LEFT:
+	            this->Playerx -= this->PlayerSpeed;
+	            break;
+
+	            case SDLK_RIGHT:
+	            this->Playerx += this->PlayerSpeed;
+	            break;
+            };
+        };
+        void drawPlayer(SDL_Surface* ScreenSurface){
+            SDL_Rect rect;
+            rect.x = Playerx;
+            rect.y = Playery;
+            SDL_BlitSurface( this->surface, NULL, ScreenSurface, &rect );
+        };
+        void exit(){
+            SDL_FreeSurface(this->surface);
+            this->surface = NULL;
+        }
+};
